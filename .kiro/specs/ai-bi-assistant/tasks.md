@@ -6,7 +6,7 @@ Implement a Python 3.10+ FastAPI application that loads CSV sales data into SQLi
 
 ## Tasks
 
-- [-] 1. Project scaffold and dependencies
+- [x] 1. Project scaffold and dependencies
   - Create `requirements.txt` with pinned versions: `fastapi`, `uvicorn[standard]`, `google-generativeai`, `pytest`, `pytest-asyncio`, `httpx`, `hypothesis`
   - Create `.env.example` with `GEMINI_API_KEY=your_key_here`
   - Create `README.md` with setup, run, test, and API usage instructions
@@ -16,7 +16,7 @@ Implement a Python 3.10+ FastAPI application that loads CSV sales data into SQLi
   - _Requirements: 10.1, 10.5, 10.6_
 
 - [ ] 2. Data loading pipeline
-  - [~] 2.1 Implement `data_loader.init_db()`
+  - [-] 2.1 Implement `data_loader.init_db()`
     - Create all three SQLite tables (`sales_raw`, `sales`, `rejected_rows`) by dropping and recreating on every call
     - Read `data/sales.csv` row by row and insert verbatim into `sales_raw`
     - Apply rejection rules in order: `duplicate_transaction_id`, `returned`, `missing_price`, `quantity_zero`, `unparseable_date`; write rejected rows with reason to `rejected_rows`
