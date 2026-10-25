@@ -1,0 +1,101 @@
+{
+  "pbtResults": {},
+  "executionHistory": {
+    "1. Project scaffold and dependencies": [
+      {
+        "executionId": "982be22d-1aaf-48ba-b649-9b667acdf819",
+        "chatSessionId": "sess_303d7165-b5e2-425e-96ff-9722baf7473d",
+        "timestamp": 1792905452218
+      },
+      {
+        "executionId": "982be22d-1aaf-48ba-b649-9b667acdf819",
+        "chatSessionId": "sess_303d7165-b5e2-425e-96ff-9722baf7473d",
+        "timestamp": 1792905462052
+      }
+    ],
+    "2.1 Implement `data_loader.init_db()`": [
+      {
+        "executionId": "982be22d-1aaf-48ba-b649-9b667acdf819",
+        "chatSessionId": "sess_303d7165-b5e2-425e-96ff-9722baf7473d",
+        "timestamp": 1792905453276
+      }
+    ],
+    "3. Checkpoint — data pipeline": [
+      {
+        "executionId": "982be22d-1aaf-48ba-b649-9b667acdf819",
+        "chatSessionId": "sess_303d7165-b5e2-425e-96ff-9722baf7473d",
+        "timestamp": 1792905453391
+      }
+    ],
+    "4.1 Implement `query_engine.execute()`": [
+      {
+        "executionId": "982be22d-1aaf-48ba-b649-9b667acdf819",
+        "chatSessionId": "sess_303d7165-b5e2-425e-96ff-9722baf7473d",
+        "timestamp": 1792905453452
+      }
+    ],
+    "5.1 Implement `intent_classifier.classify()`": [
+      {
+        "executionId": "982be22d-1aaf-48ba-b649-9b667acdf819",
+        "chatSessionId": "sess_303d7165-b5e2-425e-96ff-9722baf7473d",
+        "timestamp": 1792905453497
+      }
+    ],
+    "6.1 Implement `answer_builder.build()`": [
+      {
+        "executionId": "982be22d-1aaf-48ba-b649-9b667acdf819",
+        "chatSessionId": "sess_303d7165-b5e2-425e-96ff-9722baf7473d",
+        "timestamp": 1792905453602
+      }
+    ],
+    "7. Checkpoint — core components": [
+      {
+        "executionId": "982be22d-1aaf-48ba-b649-9b667acdf819",
+        "chatSessionId": "sess_303d7165-b5e2-425e-96ff-9722baf7473d",
+        "timestamp": 1792905453641
+      }
+    ],
+    "8.1 Implement `main.py` with lifespan, routes, and error handling": [
+      {
+        "executionId": "982be22d-1aaf-48ba-b649-9b667acdf819",
+        "chatSessionId": "sess_303d7165-b5e2-425e-96ff-9722baf7473d",
+        "timestamp": 1792905453675
+      }
+    ],
+    "9.1 Implement `frontend/index.html`": [
+      {
+        "executionId": "982be22d-1aaf-48ba-b649-9b667acdf819",
+        "chatSessionId": "sess_303d7165-b5e2-425e-96ff-9722baf7473d",
+        "timestamp": 1792905453713
+      }
+    ],
+    "10.1 Write `docs/ARCHITECTURE.md`": [
+      {
+        "executionId": "982be22d-1aaf-48ba-b649-9b667acdf819",
+        "chatSessionId": "sess_303d7165-b5e2-425e-96ff-9722baf7473d",
+        "timestamp": 1792905453745
+      }
+    ],
+    "10.2 Write `docs/AI_USAGE.md`": [
+      {
+        "executionId": "982be22d-1aaf-48ba-b649-9b667acdf819",
+        "chatSessionId": "sess_303d7165-b5e2-425e-96ff-9722baf7473d",
+        "timestamp": 1792905453787
+      }
+    ],
+    "10.3 Write `docs/LIMITATIONS.md`": [
+      {
+        "executionId": "982be22d-1aaf-48ba-b649-9b667acdf819",
+        "chatSessionId": "sess_303d7165-b5e2-425e-96ff-9722baf7473d",
+        "timestamp": 1792905453830
+      }
+    ],
+    "11. Final checkpoint — full test suite": [
+      {
+        "executionId": "982be22d-1aaf-48ba-b649-9b667acdf819",
+        "chatSessionId": "sess_303d7165-b5e2-425e-96ff-9722baf7473d",
+        "timestamp": 1792905453960
+      }
+    ]
+  }
+}
