@@ -56,22 +56,22 @@ Implement a Python 3.10+ FastAPI application that loads CSV sales data into SQLi
     - Return a `QueryResult` dataclass with `intent`, `params`, `sql`, `rows`, `computed`, `warnings`
     - _Requirements: 3.1, 3.2, 3.3, 3.4, 3.5, 3.6, 3.7, 3.8, 3.9, 3.10, 3.11_
 
-  - [ ]* 4.2 Write property test for aggregation correctness (Property 4)
+  - [x]* 4.2 Write property test for aggregation correctness (Property 4)
     - **Property 4: Aggregation Correctness**
     - **Validates: Requirements 3.1, 3.3, 3.6, 3.7**
     - Use `hypothesis` to generate arbitrary sets of valid rows, load them into an in-memory DB, and assert sub-totals from grouping queries sum to the `total_revenue` result
 
-  - [ ]* 4.3 Write property test for top-N supremacy (Property 5)
+  - [x]* 4.3 Write property test for top-N supremacy (Property 5)
     - **Property 5: Top-N Supremacy**
     - **Validates: Requirements 3.2, 3.4**
     - Use `hypothesis` to generate arbitrary valid row sets and assert the returned top product / top region has revenue ≥ every other product / region in the set
 
-  - [ ]* 4.4 Write property test for month comparison arithmetic (Property 6)
+  - [x]* 4.4 Write property test for month comparison arithmetic (Property 6)
     - **Property 6: Month Comparison Arithmetic**
     - **Validates: Requirements 3.5**
     - Use `hypothesis` to generate two distinct months and arbitrary revenue rows and assert `absolute_difference == rev_B - rev_A` and `percentage_change == (rev_B - rev_A) / rev_A * 100` within floating-point tolerance
 
-  - [ ]* 4.5 Write unit tests for `query_engine`
+  - [x]* 4.5 Write unit tests for `query_engine`
     - Test all 7 intents return correct results from the shared test DB
     - Assert top product is Monitor with revenue 473,000
     - Assert top region is South with revenue 411,200
@@ -80,8 +80,8 @@ Implement a Python 3.10+ FastAPI application that loads CSV sales data into SQLi
     - Assert that a write operation on the read-only connection raises `sqlite3.OperationalError`
     - _Requirements: 3.1–3.11, 8.4, 9.1_
 
-- [ ] 5. Intent classifier
-  - [ ] 5.1 Implement `intent_classifier.classify()`
+- [x] 5. Intent classifier
+  - [x] 5.1 Implement `intent_classifier.classify()`
     - Apply SQL injection guard (case-insensitive check for DROP, DELETE, INSERT, UPDATE, ALTER, CREATE, TRUNCATE) before any classification; return `unsupported` immediately if matched
     - Call Gemini API with the structured prompt; parse response with `json.loads()`; on any exception fall back to `Keyword_Matcher`
     - Validate returned `intent` against `SUPPORTED_INTENTS`; validate all param values against whitelist of products, regions, and months derived from the `sales` table
@@ -90,17 +90,17 @@ Implement a Python 3.10+ FastAPI application that loads CSV sales data into SQLi
     - Return a `ClassificationResult` dataclass with `intent`, `params`, `source`
     - _Requirements: 4.1, 4.2, 4.3, 4.4, 4.5, 4.6, 4.7, 8.2, 8.3_
 
-  - [ ]* 5.2 Write property test for whitelist enforcement (Property 8)
+  - [x]* 5.2 Write property test for whitelist enforcement (Property 8)
     - **Property 8: Whitelist Enforcement**
     - **Validates: Requirements 4.2, 4.6**
     - Use `hypothesis` to generate arbitrary param values not in the whitelist and assert the final intent is always `unsupported`
 
-  - [ ]* 5.3 Write property test for SQL injection safety (Property 10)
+  - [x]* 5.3 Write property test for SQL injection safety (Property 10)
     - **Property 10: SQL Injection Safety**
     - **Validates: Requirements 4.7, 8.1, 8.3**
     - Use `hypothesis` to generate question strings containing SQL DML/DDL keywords and assert the classifier always returns `unsupported` without calling the query engine
 
-  - [ ]* 5.4 Write unit tests for `intent_classifier`
+  - [x]* 5.4 Write unit tests for `intent_classifier`
     - Test Gemini happy path (mock API returning valid JSON) → correct intent and params
     - Test Gemini returns non-JSON → fallback to `Keyword_Matcher`
     - Test Gemini unavailable (network error) → fallback to `Keyword_Matcher`
@@ -109,35 +109,35 @@ Implement a Python 3.10+ FastAPI application that loads CSV sales data into SQLi
     - Test param value not in whitelist → intent `unsupported`
     - _Requirements: 4.1–4.7, 8.2, 8.3, 9.1, 9.2, 9.3_
 
-- [ ] 6. Answer builder
-  - [ ] 6.1 Implement `answer_builder.build()`
+- [x] 6. Answer builder
+  - [x] 6.1 Implement `answer_builder.build()`
     - Implement all 7 answer text templates driven purely from computed numbers in `QueryResult`
     - Implement the `unsupported` message that lists all 7 supported intent names
     - Handle graceful message for `compare_months` when a requested month is absent from the dataset
     - Return a dict matching the `AskResponse` schema fields: `answer`, `intent`, `params`, `sql`, `supporting_data`, `warnings`
     - _Requirements: 5.1, 5.2, 5.3, 5.4_
 
-  - [ ]* 6.2 Write property test for response schema completeness (Property 7)
+  - [x]* 6.2 Write property test for response schema completeness (Property 7)
     - **Property 7: Response Schema Completeness**
     - **Validates: Requirements 3.10, 3.11, 5.4**
     - Use `hypothesis` to generate arbitrary supported intents and assert the returned dict always contains all six required fields and `sql` is non-empty
 
-  - [ ]* 6.3 Write property test for unsupported intent listing (Property 11)
+  - [x]* 6.3 Write property test for unsupported intent listing (Property 11)
     - **Property 11: Unsupported Intent Listing**
     - **Validates: Requirements 5.2**
     - Use `hypothesis` (or parameterised test) to generate questions that resolve to `unsupported` and assert the `answer` field references all 7 supported intent names
 
-  - [ ]* 6.4 Write unit tests for `answer_builder`
+  - [x]* 6.4 Write unit tests for `answer_builder`
     - Assert answer text for each of the 7 intents matches expected format
     - Assert `unsupported` response contains all 7 intent names
     - Assert `compare_months` with missing month returns a graceful message
     - _Requirements: 5.1, 5.2, 5.3, 5.4_
 
-- [ ] 7. Checkpoint — core components
+- [x] 7. Checkpoint — core components
   - Ensure all tests pass, ask the user if questions arise.
 
-- [ ] 8. FastAPI application and wiring
-  - [ ] 8.1 Implement `main.py` with lifespan, routes, and error handling
+- [x] 8. FastAPI application and wiring
+  - [x] 8.1 Implement `main.py` with lifespan, routes, and error handling
     - Wire `lifespan` context manager to call `data_loader.init_db()` on startup
     - Implement `POST /ask`: validate `AskRequest`, call `classify()` → `execute()` → `build()`, return `AskResponse`
     - Implement `GET /health` returning HTTP 200
@@ -146,12 +146,12 @@ Implement a Python 3.10+ FastAPI application that loads CSV sales data into SQLi
     - Add global exception handler returning HTTP 500 `{"error": "Internal server error"}` with no stack trace
     - _Requirements: 6.1, 6.2, 6.3, 6.4, 6.5, 6.6_
 
-  - [ ]* 8.2 Write property test for input validation rejection (Property 9)
+  - [x]* 8.2 Write property test for input validation rejection (Property 9)
     - **Property 9: Input Validation Rejection**
     - **Validates: Requirements 6.2, 6.3**
     - Use `hypothesis` to generate empty/whitespace strings and strings > 500 chars, POST them to `/ask`, and assert the response is HTTP 4xx and no DB query executes
 
-  - [ ]* 8.3 Write integration tests for API endpoints
+  - [x]* 8.3 Write integration tests for API endpoints
     - Test `POST /ask` with a valid question → 200 with all 6 response fields
     - Test empty question → 422 with no stack trace
     - Test question > 500 chars → 422 with no stack trace
@@ -161,8 +161,8 @@ Implement a Python 3.10+ FastAPI application that loads CSV sales data into SQLi
     - Test `GET /data-quality` → 200 with 3 rejected rows
     - _Requirements: 6.1–6.6, 9.1_
 
-- [ ] 9. Frontend
-  - [ ] 9.1 Implement `frontend/index.html`
+- [x] 9. Frontend
+  - [x] 9.1 Implement `frontend/index.html`
     - Single-page layout with text input, "Ask" button, and example-question chips for all 7 supported intents
     - On submit: POST to `/ask`, display answer in an answer card, render supporting data in a table, show SQL in a collapsible "SQL used" section
     - For `monthly_trend` intent: render a CSS bar chart (flexbox/grid + inline `height` % of max revenue) with no external library
@@ -170,20 +170,20 @@ Implement a Python 3.10+ FastAPI application that loads CSV sales data into SQLi
     - Serve from FastAPI at `/`
     - _Requirements: 7.1, 7.2, 7.3, 7.4, 7.5, 7.6, 7.7_
 
-- [ ] 10. Documentation
-  - [ ] 10.1 Write `docs/ARCHITECTURE.md`
+- [x] 10. Documentation
+  - [x] 10.1 Write `docs/ARCHITECTURE.md`
     - Include a Mermaid component diagram and explanation of storage layout and query path
     - _Requirements: 10.2_
 
-  - [ ] 10.2 Write `docs/AI_USAGE.md`
+  - [x] 10.2 Write `docs/AI_USAGE.md`
     - Describe how Gemini is called, the exact prompt sent, what is validated, and the fallback strategy
     - _Requirements: 10.3_
 
-  - [ ] 10.3 Write `docs/LIMITATIONS.md`
+  - [x] 10.3 Write `docs/LIMITATIONS.md`
     - Describe known limitations, out-of-scope question types, and unsupported intents
     - _Requirements: 10.4_
 
-- [ ] 11. Final checkpoint — full test suite
+- [x] 11. Final checkpoint — full test suite
   - Ensure all tests pass, ask the user if questions arise.
 
 ## Notes

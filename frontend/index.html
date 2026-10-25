@@ -1,1 +1,217 @@
-<!-- frontend/index.html — AI BI Assistant single-page frontend (to be implemented in Task 9.1) -->
+﻿<!DOCTYPE html>
+<html lang='en'>
+<head>
+    <meta charset='UTF-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <title>AI BI Assistant</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif; background: #f5f7fa; color: #333; padding: 20px; }
+        .container { max-width: 1000px; margin: 0 auto; }
+        h1 { margin-bottom: 30px; color: #2c3e50; }
+        .search-box { background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); margin-bottom: 20px; }
+        .search-box input { width: calc(100% - 100px); padding: 12px; font-size: 16px; border: 1px solid #ddd; border-radius: 4px; }
+        .search-box button { width: 90px; padding: 12px; font-size: 16px; background: #3498db; color: white; border: none; border-radius: 4px; cursor: pointer; margin-left: 10px; }
+        .search-box button:hover { background: #2980b9; }
+        .example-chips { margin-top: 15px; }
+        .chip { display: inline-block; padding: 8px 15px; margin: 5px 5px 5px 0; background: #ecf0f1; border-radius: 20px; font-size: 14px; cursor: pointer; }
+        .chip:hover { background: #d5dbdb; }
+        .answer-card, .chart-container, .data-table-container, .sql-container { background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); margin-bottom: 20px; }
+        .answer-card h2 { font-size: 18px; margin-bottom: 10px; color: #2c3e50; }
+        .answer-card p { font-size: 16px; line-height: 1.6; }
+        .chart { display: flex; align-items: flex-end; gap: 15px; height: 250px; margin-top: 15px; }
+        .bar-container { flex: 1; display: flex; flex-direction: column; align-items: center; }
+        .bar { width: 100%; background: linear-gradient(to top, #3498db, #5dade2); border-radius: 4px 4px 0 0; }
+        .bar-label { margin-top: 8px; font-size: 12px; text-align: center; font-weight: 600; }
+        .bar-value { margin-top: 4px; font-size: 11px; color: #7f8c8d; text-align: center; }
+        table { width: 100%; border-collapse: collapse; }
+        th, td { padding: 12px; text-align: left; border-bottom: 1px solid #ecf0f1; }
+        th { background: #f8f9fa; font-weight: 600; color: #2c3e50; }
+        .sql-container summary { cursor: pointer; font-weight: 600; padding: 5px 0; color: #3498db; }
+        .sql-container pre { background: #f8f9fa; padding: 15px; border-radius: 4px; overflow-x: auto; margin-top: 10px; font-size: 14px; }
+        .hidden { display: none; }
+        .warning { background: #fff3cd; border-left: 4px solid #ffc107; padding: 12px; margin-top: 15px; border-radius: 4px; }
+    </style>
+</head>
+<body>
+    <div class='container'>
+        <h1>🤖 AI BI Assistant</h1>
+        
+        <div class='search-box'>
+            <input type='text' id='question' placeholder='Ask a question about your sales data...' />
+            <button onclick='askQuestion()'>Ask</button>
+            <div class='example-chips'>
+                <span class='chip' onclick='fillQuestion("What is the total revenue?")'>Total Revenue</span>
+                <span class='chip' onclick='fillQuestion("Which product had the highest revenue?")'>Top Product</span>
+                <span class='chip' onclick='fillQuestion("Show me the monthly revenue trend.")'>Monthly Trend</span>
+                <span class='chip' onclick='fillQuestion("Which region performed best?")'>Top Region</span>
+                <span class='chip' onclick='fillQuestion("Compare revenue for 2026-04 and 2026-05.")'>Compare Months</span>
+            </div>
+        </div>
+        
+        <div id='answer-section' class='hidden'>
+            <div class='answer-card'>
+                <h2>Answer</h2>
+                <p id='answer-text'></p>
+                <div id='warnings-section'></div>
+            </div>
+        </div>
+        
+        <div id='chart-section' class='hidden'>
+            <div class='chart-container'>
+                <h2>Monthly Revenue Trend</h2>
+                <div class='chart' id='chart'></div>
+            </div>
+        </div>
+        
+        <div id='data-section' class='hidden'>
+            <div class='data-table-container'>
+                <h2>Supporting Data</h2>
+                <table id='data-table'></table>
+            </div>
+        </div>
+        
+        <div id='sql-section' class='hidden'>
+            <div class='sql-container'>
+                <details>
+                    <summary>SQL Used</summary>
+                    <pre id='sql-text'></pre>
+                </details>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        function fillQuestion(text) {
+            document.getElementById('question').value = text.replace(/\"/g, '');
+        }
+        
+        async function askQuestion() {
+            const question = document.getElementById('question').value.trim();
+            if (!question) {
+                alert('Please enter a question');
+                return;
+            }
+            
+            try {
+                const response = await fetch('/ask', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ question })
+                });
+                
+                if (!response.ok) {
+                    const error = await response.json();
+                    alert('Error: ' + (error.detail || error.error || 'Request failed'));
+                    return;
+                }
+                
+                const data = await response.json();
+                displayResults(data);
+            } catch (error) {
+                alert('Error: ' + error.message);
+            }
+        }
+        
+        function displayResults(data) {
+            // Answer
+            document.getElementById('answer-text').textContent = data.answer;
+            document.getElementById('answer-section').classList.remove('hidden');
+            
+            // Warnings
+            const warningsSection = document.getElementById('warnings-section');
+            if (data.warnings && data.warnings.length > 0) {
+                warningsSection.innerHTML = '<div class=\"warning\">⚠️ ' + data.warnings.join('<br>⚠️ ') + '</div>';
+            } else {
+                warningsSection.innerHTML = '';
+            }
+            
+            // Chart for monthly_trend
+            if (data.intent === 'monthly_trend' && data.supporting_data.length > 0) {
+                renderChart(data.supporting_data);
+                document.getElementById('chart-section').classList.remove('hidden');
+            } else {
+                document.getElementById('chart-section').classList.add('hidden');
+            }
+            
+            // Supporting data table
+            if (data.supporting_data.length > 0) {
+                renderTable(data.supporting_data);
+                document.getElementById('data-section').classList.remove('hidden');
+            } else {
+                document.getElementById('data-section').classList.add('hidden');
+            }
+            
+            // SQL
+            document.getElementById('sql-text').textContent = data.sql || 'N/A';
+            document.getElementById('sql-section').classList.remove('hidden');
+        }
+        
+        function renderChart(data) {
+            const chartDiv = document.getElementById('chart');
+            chartDiv.innerHTML = '';
+            
+            const maxRevenue = Math.max(...data.map(d => d.revenue));
+            
+            data.forEach(item => {
+                const barContainer = document.createElement('div');
+                barContainer.className = 'bar-container';
+                
+                const bar = document.createElement('div');
+                bar.className = 'bar';
+                const heightPercent = (item.revenue / maxRevenue) * 100;
+                bar.style.height = heightPercent + '%';
+                
+                const label = document.createElement('div');
+                label.className = 'bar-label';
+                label.textContent = item.month;
+                
+                const value = document.createElement('div');
+                value.className = 'bar-value';
+                value.textContent = '£' + item.revenue.toLocaleString();
+                
+                barContainer.appendChild(bar);
+                barContainer.appendChild(label);
+                barContainer.appendChild(value);
+                chartDiv.appendChild(barContainer);
+            });
+        }
+        
+        function renderTable(data) {
+            const table = document.getElementById('data-table');
+            table.innerHTML = '';
+            
+            if (data.length === 0) return;
+            
+            // Header
+            const thead = document.createElement('thead');
+            const headerRow = document.createElement('tr');
+            Object.keys(data[0]).forEach(key => {
+                const th = document.createElement('th');
+                th.textContent = key.replace(/_/g, ' ').toUpperCase();
+                headerRow.appendChild(th);
+            });
+            thead.appendChild(headerRow);
+            table.appendChild(thead);
+            
+            // Body
+            const tbody = document.createElement('tbody');
+            data.forEach(row => {
+                const tr = document.createElement('tr');
+                Object.values(row).forEach(value => {
+                    const td = document.createElement('td');
+                    td.textContent = typeof value === 'number' ? value.toLocaleString() : value;
+                    tr.appendChild(td);
+                });
+                tbody.appendChild(tr);
+            });
+            table.appendChild(tbody);
+        }
+        
+        // Allow Enter key to submit
+        document.getElementById('question').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') askQuestion();
+        });
+    </script>
+</body>
+</html>
