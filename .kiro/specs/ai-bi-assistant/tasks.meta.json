@@ -1,5 +1,18 @@
 {
-  "pbtResults": {},
+  "pbtResults": {
+    "2.4 Write property test for rejection completeness (Property 3)": {
+      "status": "passed",
+      "lastRunTimestamp": 1792906551567
+    },
+    "2.3 Write property test for revenue formula invariant (Property 2)": {
+      "status": "passed",
+      "lastRunTimestamp": 1792906726266
+    },
+    "2.2 Write property test for date conversion round-trip (Property 1)": {
+      "status": "passed",
+      "lastRunTimestamp": 1792906875474
+    }
+  },
   "executionHistory": {
     "1. Project scaffold and dependencies": [
       {
@@ -28,6 +41,11 @@
         "executionId": "982be22d-1aaf-48ba-b649-9b667acdf819",
         "chatSessionId": "sess_303d7165-b5e2-425e-96ff-9722baf7473d",
         "timestamp": 1792906104762
+      },
+      {
+        "executionId": "982be22d-1aaf-48ba-b649-9b667acdf819",
+        "chatSessionId": "sess_303d7165-b5e2-425e-96ff-9722baf7473d",
+        "timestamp": 1792906242994
       }
     ],
     "3. Checkpoint — data pipeline": [
@@ -35,6 +53,16 @@
         "executionId": "982be22d-1aaf-48ba-b649-9b667acdf819",
         "chatSessionId": "sess_303d7165-b5e2-425e-96ff-9722baf7473d",
         "timestamp": 1792905453391
+      },
+      {
+        "executionId": "982be22d-1aaf-48ba-b649-9b667acdf819",
+        "chatSessionId": "sess_303d7165-b5e2-425e-96ff-9722baf7473d",
+        "timestamp": 1792906948560
+      },
+      {
+        "executionId": "982be22d-1aaf-48ba-b649-9b667acdf819",
+        "chatSessionId": "sess_303d7165-b5e2-425e-96ff-9722baf7473d",
+        "timestamp": 1792907062453
       }
     ],
     "4.1 Implement `query_engine.execute()`": [
@@ -42,6 +70,16 @@
         "executionId": "982be22d-1aaf-48ba-b649-9b667acdf819",
         "chatSessionId": "sess_303d7165-b5e2-425e-96ff-9722baf7473d",
         "timestamp": 1792905453452
+      },
+      {
+        "executionId": "982be22d-1aaf-48ba-b649-9b667acdf819",
+        "chatSessionId": "sess_303d7165-b5e2-425e-96ff-9722baf7473d",
+        "timestamp": 1792907071548
+      },
+      {
+        "executionId": "982be22d-1aaf-48ba-b649-9b667acdf819",
+        "chatSessionId": "sess_303d7165-b5e2-425e-96ff-9722baf7473d",
+        "timestamp": 1792907202859
       }
     ],
     "5.1 Implement `intent_classifier.classify()`": [
@@ -49,6 +87,11 @@
         "executionId": "982be22d-1aaf-48ba-b649-9b667acdf819",
         "chatSessionId": "sess_303d7165-b5e2-425e-96ff-9722baf7473d",
         "timestamp": 1792905453497
+      },
+      {
+        "executionId": "982be22d-1aaf-48ba-b649-9b667acdf819",
+        "chatSessionId": "sess_303d7165-b5e2-425e-96ff-9722baf7473d",
+        "timestamp": 1792907282763
       }
     ],
     "6.1 Implement `answer_builder.build()`": [
@@ -105,6 +148,96 @@
         "executionId": "982be22d-1aaf-48ba-b649-9b667acdf819",
         "chatSessionId": "sess_303d7165-b5e2-425e-96ff-9722baf7473d",
         "timestamp": 1792905453960
+      }
+    ],
+    "2. Data loading pipeline": [
+      {
+        "executionId": "982be22d-1aaf-48ba-b649-9b667acdf819",
+        "chatSessionId": "sess_303d7165-b5e2-425e-96ff-9722baf7473d",
+        "timestamp": 1792906243041
+      }
+    ],
+    "2.2 Write property test for date conversion round-trip (Property 1)": [
+      {
+        "executionId": "982be22d-1aaf-48ba-b649-9b667acdf819",
+        "chatSessionId": "sess_303d7165-b5e2-425e-96ff-9722baf7473d",
+        "timestamp": 1792906325745
+      },
+      {
+        "executionId": "982be22d-1aaf-48ba-b649-9b667acdf819",
+        "chatSessionId": "sess_303d7165-b5e2-425e-96ff-9722baf7473d",
+        "timestamp": 1792906894797
+      }
+    ],
+    "2.3 Write property test for revenue formula invariant (Property 2)": [
+      {
+        "executionId": "982be22d-1aaf-48ba-b649-9b667acdf819",
+        "chatSessionId": "sess_303d7165-b5e2-425e-96ff-9722baf7473d",
+        "timestamp": 1792906335558
+      },
+      {
+        "executionId": "982be22d-1aaf-48ba-b649-9b667acdf819",
+        "chatSessionId": "sess_303d7165-b5e2-425e-96ff-9722baf7473d",
+        "timestamp": 1792906903287
+      }
+    ],
+    "2.4 Write property test for rejection completeness (Property 3)": [
+      {
+        "executionId": "982be22d-1aaf-48ba-b649-9b667acdf819",
+        "chatSessionId": "sess_303d7165-b5e2-425e-96ff-9722baf7473d",
+        "timestamp": 1792906342410
+      },
+      {
+        "executionId": "982be22d-1aaf-48ba-b649-9b667acdf819",
+        "chatSessionId": "sess_303d7165-b5e2-425e-96ff-9722baf7473d",
+        "timestamp": 1792906911381
+      }
+    ],
+    "2.5 Write unit tests for `data_loader`": [
+      {
+        "executionId": "982be22d-1aaf-48ba-b649-9b667acdf819",
+        "chatSessionId": "sess_303d7165-b5e2-425e-96ff-9722baf7473d",
+        "timestamp": 1792906351923
+      },
+      {
+        "executionId": "982be22d-1aaf-48ba-b649-9b667acdf819",
+        "chatSessionId": "sess_303d7165-b5e2-425e-96ff-9722baf7473d",
+        "timestamp": 1792906940836
+      }
+    ],
+    "4. Query engine": [
+      {
+        "executionId": "982be22d-1aaf-48ba-b649-9b667acdf819",
+        "chatSessionId": "sess_303d7165-b5e2-425e-96ff-9722baf7473d",
+        "timestamp": 1792907202907
+      }
+    ],
+    "4.2 Write property test for aggregation correctness (Property 4)": [
+      {
+        "executionId": "982be22d-1aaf-48ba-b649-9b667acdf819",
+        "chatSessionId": "sess_303d7165-b5e2-425e-96ff-9722baf7473d",
+        "timestamp": 1792907221495
+      }
+    ],
+    "4.3 Write property test for top-N supremacy (Property 5)": [
+      {
+        "executionId": "982be22d-1aaf-48ba-b649-9b667acdf819",
+        "chatSessionId": "sess_303d7165-b5e2-425e-96ff-9722baf7473d",
+        "timestamp": 1792907240609
+      }
+    ],
+    "4.4 Write property test for month comparison arithmetic (Property 6)": [
+      {
+        "executionId": "982be22d-1aaf-48ba-b649-9b667acdf819",
+        "chatSessionId": "sess_303d7165-b5e2-425e-96ff-9722baf7473d",
+        "timestamp": 1792907262117
+      }
+    ],
+    "4.5 Write unit tests for `query_engine`": [
+      {
+        "executionId": "982be22d-1aaf-48ba-b649-9b667acdf819",
+        "chatSessionId": "sess_303d7165-b5e2-425e-96ff-9722baf7473d",
+        "timestamp": 1792907271227
       }
     ]
   }

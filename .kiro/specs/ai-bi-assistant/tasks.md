@@ -15,8 +15,8 @@ Implement a Python 3.10+ FastAPI application that loads CSV sales data into SQLi
   - Create `frontend/` and `docs/` directories
   - _Requirements: 10.1, 10.5, 10.6_
 
-- [ ] 2. Data loading pipeline
-  - [-] 2.1 Implement `data_loader.init_db()`
+- [x] 2. Data loading pipeline
+  - [x] 2.1 Implement `data_loader.init_db()`
     - Create all three SQLite tables (`sales_raw`, `sales`, `rejected_rows`) by dropping and recreating on every call
     - Read `data/sales.csv` row by row and insert verbatim into `sales_raw`
     - Apply rejection rules in order: `duplicate_transaction_id`, `returned`, `missing_price`, `quantity_zero`, `unparseable_date`; write rejected rows with reason to `rejected_rows`
@@ -24,32 +24,32 @@ Implement a Python 3.10+ FastAPI application that loads CSV sales data into SQLi
     - Raise `RuntimeError` with a clear message if `data/sales.csv` is missing at startup
     - _Requirements: 1.1, 1.2, 1.3, 1.4, 1.5, 1.6, 1.7, 1.8, 1.9, 2.1, 2.2, 2.3, 2.4, 2.5, 2.6_
 
-  - [ ]* 2.2 Write property test for date conversion round-trip (Property 1)
+  - [x]* 2.2 Write property test for date conversion round-trip (Property 1)
     - **Property 1: Date Conversion Round-Trip**
     - **Validates: Requirements 1.2, 1.3**
     - Use `hypothesis` to generate arbitrary DD-MM-YYYY date strings and assert the produced `YYYY-MM` month string matches the original calendar month
 
-  - [ ]* 2.3 Write property test for revenue formula invariant (Property 2)
+  - [x]* 2.3 Write property test for revenue formula invariant (Property 2)
     - **Property 2: Revenue Formula Invariant**
     - **Validates: Requirements 1.4**
     - Use `hypothesis` to generate arbitrary positive `Quantity`, non-negative `Unit_price`, and non-negative `Discount_amount`, insert a synthetic row, and assert `revenue == Quantity * Unit_price - Discount_amount`
 
-  - [ ]* 2.4 Write property test for rejection completeness (Property 3)
+  - [x]* 2.4 Write property test for rejection completeness (Property 3)
     - **Property 3: Rejection Completeness**
     - **Validates: Requirements 2.1, 2.2, 2.3, 2.4, 2.5, 2.6**
     - Use `hypothesis` to generate rows that violate at least one rule and assert each appears in `rejected_rows` and not in `sales`
 
-  - [ ]* 2.5 Write unit tests for `data_loader`
+  - [x]* 2.5 Write unit tests for `data_loader`
     - Assert exactly 48 rows in `sales` and 3 rows in `rejected_rows` from `data/sales.csv`
     - Assert TXN0033 → reason `returned`, TXN0034 → reason `quantity_zero`, TXN0051 → reason `missing_price`
     - Assert total revenue across `sales` equals 1,439,200
     - _Requirements: 1.6, 1.7, 1.8, 1.9, 1.10_
 
-- [~] 3. Checkpoint — data pipeline
+- [x] 3. Checkpoint — data pipeline
   - Ensure all tests pass, ask the user if questions arise.
 
-- [ ] 4. Query engine
-  - [~] 4.1 Implement `query_engine.execute()`
+- [x] 4. Query engine
+  - [x] 4.1 Implement `query_engine.execute()`
     - Define `QUERIES` dict with all seven parameterized SQL templates (`total_revenue`, `top_product`, `monthly_trend`, `top_region`, `compare_months`, `revenue_by_category`, `revenue_by_channel`)
     - Open database in read-only mode using `sqlite3.connect(f"file:{db_path}?mode=ro", uri=True)` for every call
     - For `compare_months`: resolve `month_a`/`month_b` params, run SQL with `?` placeholders, then compute `absolute_difference` and `percentage_change` as post-query arithmetic
@@ -81,7 +81,7 @@ Implement a Python 3.10+ FastAPI application that loads CSV sales data into SQLi
     - _Requirements: 3.1–3.11, 8.4, 9.1_
 
 - [ ] 5. Intent classifier
-  - [~] 5.1 Implement `intent_classifier.classify()`
+  - [ ] 5.1 Implement `intent_classifier.classify()`
     - Apply SQL injection guard (case-insensitive check for DROP, DELETE, INSERT, UPDATE, ALTER, CREATE, TRUNCATE) before any classification; return `unsupported` immediately if matched
     - Call Gemini API with the structured prompt; parse response with `json.loads()`; on any exception fall back to `Keyword_Matcher`
     - Validate returned `intent` against `SUPPORTED_INTENTS`; validate all param values against whitelist of products, regions, and months derived from the `sales` table
@@ -110,7 +110,7 @@ Implement a Python 3.10+ FastAPI application that loads CSV sales data into SQLi
     - _Requirements: 4.1–4.7, 8.2, 8.3, 9.1, 9.2, 9.3_
 
 - [ ] 6. Answer builder
-  - [~] 6.1 Implement `answer_builder.build()`
+  - [ ] 6.1 Implement `answer_builder.build()`
     - Implement all 7 answer text templates driven purely from computed numbers in `QueryResult`
     - Implement the `unsupported` message that lists all 7 supported intent names
     - Handle graceful message for `compare_months` when a requested month is absent from the dataset
@@ -133,11 +133,11 @@ Implement a Python 3.10+ FastAPI application that loads CSV sales data into SQLi
     - Assert `compare_months` with missing month returns a graceful message
     - _Requirements: 5.1, 5.2, 5.3, 5.4_
 
-- [~] 7. Checkpoint — core components
+- [ ] 7. Checkpoint — core components
   - Ensure all tests pass, ask the user if questions arise.
 
 - [ ] 8. FastAPI application and wiring
-  - [~] 8.1 Implement `main.py` with lifespan, routes, and error handling
+  - [ ] 8.1 Implement `main.py` with lifespan, routes, and error handling
     - Wire `lifespan` context manager to call `data_loader.init_db()` on startup
     - Implement `POST /ask`: validate `AskRequest`, call `classify()` → `execute()` → `build()`, return `AskResponse`
     - Implement `GET /health` returning HTTP 200
@@ -162,7 +162,7 @@ Implement a Python 3.10+ FastAPI application that loads CSV sales data into SQLi
     - _Requirements: 6.1–6.6, 9.1_
 
 - [ ] 9. Frontend
-  - [~] 9.1 Implement `frontend/index.html`
+  - [ ] 9.1 Implement `frontend/index.html`
     - Single-page layout with text input, "Ask" button, and example-question chips for all 7 supported intents
     - On submit: POST to `/ask`, display answer in an answer card, render supporting data in a table, show SQL in a collapsible "SQL used" section
     - For `monthly_trend` intent: render a CSS bar chart (flexbox/grid + inline `height` % of max revenue) with no external library
@@ -171,19 +171,19 @@ Implement a Python 3.10+ FastAPI application that loads CSV sales data into SQLi
     - _Requirements: 7.1, 7.2, 7.3, 7.4, 7.5, 7.6, 7.7_
 
 - [ ] 10. Documentation
-  - [~] 10.1 Write `docs/ARCHITECTURE.md`
+  - [ ] 10.1 Write `docs/ARCHITECTURE.md`
     - Include a Mermaid component diagram and explanation of storage layout and query path
     - _Requirements: 10.2_
 
-  - [~] 10.2 Write `docs/AI_USAGE.md`
+  - [ ] 10.2 Write `docs/AI_USAGE.md`
     - Describe how Gemini is called, the exact prompt sent, what is validated, and the fallback strategy
     - _Requirements: 10.3_
 
-  - [~] 10.3 Write `docs/LIMITATIONS.md`
+  - [ ] 10.3 Write `docs/LIMITATIONS.md`
     - Describe known limitations, out-of-scope question types, and unsupported intents
     - _Requirements: 10.4_
 
-- [~] 11. Final checkpoint — full test suite
+- [ ] 11. Final checkpoint — full test suite
   - Ensure all tests pass, ask the user if questions arise.
 
 ## Notes
